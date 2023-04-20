@@ -43,7 +43,7 @@ const upload = multer({
 
 
 
-//signUp root
+//signUp path
 //--------------------------------------------------------------------------------------
 router.post("/signup", async (req, res) => {
     const { name, number, email, password, conPassword } = req.body;
@@ -105,31 +105,37 @@ router.post("/signin", async (req, res) => {
 
 //car Post path
 //-------------------------------------------------------------------------------
-router.post("/add-car", (req, res) => {
-    //const { oemSpecs, marketplaceInventory, description } = req.body;
-    const { modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description } = req.body;
-    //const { odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace } = marketplaceInventory;
+router.post("/add-car", passport.authenticate('jwt', { session: false }), (req, res) => {
+    try {
+        if (req.user) {
+            const { modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description1, description2, description3 } = req.body;
 
-    //console.log(req.body);
-    const product = new carModel({
+            const product = new carModel({
 
-        modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink,
+                modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink,
 
-        odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace,
+                odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace,
 
-        description
-    })
+                description: [description1, description2, description3]
+            })
 
-    product.save().then(() => {
-        res.send({ status: true, product });
-    }).catch((err) => {
-        res.send({ status: false, err });
-    });
+            product.save().then((productData) => {
+                res.send({ status: true, productData });
+            }).catch((err) => {
+                res.send({ status: false, err });
+            });
+        } else {
+            res.status(404).send("please login first");
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(404).send(err);
+    }
 });
 
 //Car photo upload path
 //-----------------------------------------------------------------------------
-router.post("/car/photo/upload/:id", upload.single("car"), async (req, res) => {
+router.post("/car/photo/upload/:id", upload.single("image"), async (req, res) => {
     try {
         let _id = req.params.id;
         console.log(_id);
@@ -153,17 +159,29 @@ router.post("/car/photo/upload/:id", upload.single("car"), async (req, res) => {
 
 //Car get path
 //-----------------------------------------------------------------------------
-router.get("/get-cars", async (req, res) => {
-    const data = await carModel.find();
-    res.send(data);
+router.get("/get-cars", passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+        if (req.user) {
+            const data = await carModel.find();
+            res.send(data);
+        } else {
+            res.status(404).send("please login first");
+        }
+    } catch (err) {
+        res.status(404).send(err);
+    }
 });
 
 //Car one get path
 //----------------------------------------------------------------------------
-router.get("/get-cars/:id", async (req, res) => {
+router.get("/get-cars/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        const data = await carModel.findById(req.params.id);
-        res.send(data);
+        if (req.user) {
+            const data = await carModel.findById(req.params.id);
+            res.send(data);
+        } else {
+            res.status(404).send("please login first");
+        }
     } catch (err) {
         res.status(404).send(err);
     }
@@ -171,57 +189,143 @@ router.get("/get-cars/:id", async (req, res) => {
 
 //Car edit information path
 //----------------------------------------------------------------------------
-router.put("/cars/update/:id", async (req, res) => {
+router.put("/cars/update/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        let _id = req.params.id;
-        //console.log(_id);
-        const { modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description } = req.body;
-        //console.log({ modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink });
+        if (req.user) {
+            let _id = req.params.id;
+            const { modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description1, description2, description3 } = req.body;
 
-        const data = await carModel.updateOne({ _id: _id }, {
+            const data = await carModel.updateOne({ _id: _id }, {
 
-            $set: {
-                modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description
-            }
-        });
-        console.log(data);
-        res.status(200).json(data);
+                $set: {
+                    modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description: [description1, description2, description3]
+                }
+            });
+            console.log(data);
+            res.status(200).json(data);
+        } else {
+            res.status(404).send("please login first");
+        }
     } catch (err) {
         console.log(err);
-        res.status(404).json({ message: err.message });
+        res.status(404).send(err);
     }
 });
 
 
 // delete one car
 //----------------------------------------------------------------------------
-router.delete("/cars/delete/:id", async (req, res) => {
+router.delete("/cars/delete/:id", passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
-        let _id = req.params.id;
-        //console.log(_id);
+        if (req.user) {
+            let _id = req.params.id;
+            //console.log(_id);
 
-        const data = await carModel.deleteOne({ _id });
-        console.log(data);
-        res.status(200).json(data);
+            const data = await carModel.deleteOne({ _id });
+            console.log(data);
+            res.status(200).json(data);
+        } else {
+            res.status(404).send("please login first");
+        }
     } catch (err) {
         console.log(err);
-        res.status(404).json({ message: err.message });
+        res.status(404).send(err);
     }
 });
 
 //find the number of models available in db
 //----------------------------------------------------------------------------
-router.get('/models-count', async(req, res) => {
+router.get('/models-count', async (req, res) => {
     try {
         const modelsCount = await carModel.distinct("modelName");
-        console.log(modelsCount.length);
-        res.status(200).send(modelsCount.length);
+        let count = modelsCount.length;
+        res.status(200).json({ count: count });
+    } catch (err) {
+        console.log(err);
+        res.status(404).send(err);
+    }
+});
+
+//search car 
+//----------------------------------------------------------------------------
+router.get('/search-car', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    let { searchText } = req.query;
+    if (searchText) {
+        let searchTextArr = searchText.split(" ");
+        let modelYear = searchTextArr[searchTextArr.length - 1];
+
+        searchTextArr.splice(searchTextArr.length - 1, 1);
+        let modelName = searchTextArr.join(" ");
+    }
+
+    try {
+        if (req.user) {
+
+            if (searchText) {
+                const data = await carModel.find({ $and: [{ modelName: modelName }, { modelYear: modelYear }] });
+                res.status(200).send(data);
+            } else {
+                const data = await carModel.find();
+                res.status(200).send(data);
+            }
+        } else {
+            res.status(404).send("please login first");
+        }
+
+    } catch (err) {
+        console.log(err);
+        res.status(404).send(err);
+    }
+});
+
+//filter car 
+//----------------------------------------------------------------------------
+router.get('/filter-car', async (req, res) => {
+    let { color, price, mileage } = req.query;
+    console.log({ color, price, mileage });
+    console.log(price)
+    try {
+        if (color) {
+            const data = await carModel.find({ colors: color });
+            res.status(200).send(data);
+            return;
+        }
+        if (price) {
+            console.log("hello");
+            if (price == 500000) {
+                const data = await carModel.find({ price: { $lte: 500000 } });
+                res.status(200).send(data);
+            } else if (price == 1000000) {
+                console.log(price);
+                const data = await carModel.find({ price: { $gte: 500000 } });
+                res.status(200).send(data);
+            } else if (price == 1000001) {
+                const data = await carModel.find({ price: { $gte: 1000000 } });
+                res.status(200).send(data);
+            }
+
+        } else if (mileage) {
+            if (mileage === 15) {
+                const data = await carModel.find({ mileage: { $lte: 15 } });
+                res.status(200).send(data);
+            } else if (mileage === 30) {
+                const data = await carModel.find({ mileage: { $gte: 15 } });
+                res.status(200).send(data);
+            } else if (mileage === 31) {
+                const data = await carModel.find({ mileage: { $gte: 30 } });
+                res.status(200).send(data);
+            }
+
+        } else {
+            const data = await carModel.find();
+            res.status(200).send(data);
+        }
+
     } catch (err) {
         console.log(err);
         res.status(404).json({ message: err.message });
     }
-})
-
+});
 
 
 //generet token 
