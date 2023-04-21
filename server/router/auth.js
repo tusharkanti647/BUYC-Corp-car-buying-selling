@@ -103,6 +103,25 @@ router.post("/signin", async (req, res) => {
     }
 });
 
+//login or not check path
+//-------------------------------------------------------------------------------------------
+router.get('/check-login', passport.authenticate('jwt', { session: false }), (req, res) => {
+    try {
+        if (req.user) {
+            res.send(req.user);
+        } else {
+            res.status(404).send("please login first");
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(404).send(err);
+    }
+})
+
+
+
+
+
 //car Post path
 //-------------------------------------------------------------------------------
 router.post("/add-car", passport.authenticate('jwt', { session: false }), (req, res) => {

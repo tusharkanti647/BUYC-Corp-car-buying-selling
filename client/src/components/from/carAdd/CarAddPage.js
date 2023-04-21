@@ -52,7 +52,6 @@ function CarAddPage() {
                 body: JSON.stringify({ modelName, modelYear, price, colors, mileage, power, maxSpeed, imgLink, odometerValue, majorScratches, originalPaint, accidents, numberOfPreviousBuyers, registrationPlace, description1, description2, description3 })
             });
             if (respons.statusText === "Unauthorized") {
-                console.log("hello");
                 navigate("/login-first");
             } else {
                 const data = await respons.json();
