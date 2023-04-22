@@ -14,14 +14,14 @@ const Footer = () => {
         <footer>
             <div className="footer_container">
                 <div className="footr_details_one">
-                    <h3>Bigbasket</h3>
+                    <h3>Buyc Corp</h3>
                     <p>About Us</p>
                     <p>In News</p>
                     <p>Green bigbasket</p>
                     <p>Privacy Policy</p>
                     <p>Affiliate</p>
                     <p>Terms and Conditions</p>
-                    <p>Careers At bigbasket</p>
+                    <p>Careers</p>
                 </div>
                 <div className="footr_details_one">
                     <h3>Help</h3>

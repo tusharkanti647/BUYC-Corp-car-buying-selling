@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -105,13 +105,15 @@ function CarEditPage() {
                 method="POST"
                 onSubmit={handelSubmit}
                 sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    '& .MuiTextField-root': { m: 1, width: '50ch' },
+                    display: 'flex',
+                    justifyContent:"center"
                 }}
                 noValidate
                 autoComplete="on"
             >
-                <div >
-                    <h2>Add new Car Information</h2>
+                <div style={{display:"flex", flexDirection:"column", }} >
+                    <h2>Edit Car Information</h2>
 
                     <TextField
                         error={false}
@@ -268,7 +270,7 @@ function CarEditPage() {
                         multiline
                         rows={4}
                     />
-                    <button >CONTINUE</button>
+                    <Button variant="contained">SAVE</Button>
 
 
                 </div>

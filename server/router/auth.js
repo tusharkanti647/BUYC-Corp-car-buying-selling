@@ -268,17 +268,20 @@ router.get('/models-count', async (req, res) => {
 //search car 
 //----------------------------------------------------------------------------
 router.get('/search-car', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    let { searchText } = req.query;
-    if (searchText) {
-        let searchTextArr = searchText.split(" ");
-        let modelYear = searchTextArr[searchTextArr.length - 1];
-
-        searchTextArr.splice(searchTextArr.length - 1, 1);
-        let modelName = searchTextArr.join(" ");
-    }
-
     try {
         if (req.user) {
+            let { searchText } = req.query;
+
+            let modelYear, modelName;
+            if (searchText) {
+                let searchTextArr = searchText.split(" ");
+                modelYear = searchTextArr[searchTextArr.length - 1];
+
+                searchTextArr.splice(searchTextArr.length - 1, 1);
+                modelName = searchTextArr.join(" ");
+            }
+
+
 
             if (searchText) {
                 const data = await carModel.find({ $and: [{ modelName: modelName }, { modelYear: modelYear }] });
@@ -301,8 +304,6 @@ router.get('/search-car', passport.authenticate('jwt', { session: false }), asyn
 //----------------------------------------------------------------------------
 router.get('/filter-car', async (req, res) => {
     let { color, price, mileage } = req.query;
-    console.log({ color, price, mileage });
-    console.log(price)
     try {
         if (color) {
             const data = await carModel.find({ colors: color });
@@ -310,13 +311,11 @@ router.get('/filter-car', async (req, res) => {
             return;
         }
         if (price) {
-            console.log("hello");
             if (price == 500000) {
                 const data = await carModel.find({ price: { $lte: 500000 } });
                 res.status(200).send(data);
             } else if (price == 1000000) {
-                console.log(price);
-                const data = await carModel.find({ price: { $gte: 500000 } });
+                const data = await carModel.find({ price: { $gte: 500000, $lte: 1000000  } });
                 res.status(200).send(data);
             } else if (price == 1000001) {
                 const data = await carModel.find({ price: { $gte: 1000000 } });
@@ -324,13 +323,14 @@ router.get('/filter-car', async (req, res) => {
             }
 
         } else if (mileage) {
-            if (mileage === 15) {
+            console.log(mileage)
+            if (mileage == 15) {
                 const data = await carModel.find({ mileage: { $lte: 15 } });
                 res.status(200).send(data);
-            } else if (mileage === 30) {
-                const data = await carModel.find({ mileage: { $gte: 15 } });
+            } else if (mileage == 30) {
+                const data = await carModel.find({ mileage: { $gte: 15, $lte: 30 } });
                 res.status(200).send(data);
-            } else if (mileage === 31) {
+            } else if (mileage == 31) {
                 const data = await carModel.find({ mileage: { $gte: 30 } });
                 res.status(200).send(data);
             }

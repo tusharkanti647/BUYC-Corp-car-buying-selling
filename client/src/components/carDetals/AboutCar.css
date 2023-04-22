@@ -10,14 +10,6 @@
     padding-left: 30px; 
   }
   
-  /* .upperPart-right{
-  mar
-  } */
-  /* .upperPart-right p {
-    margin: 0px;
-    font-size: 12px;
-    color: #888888;
-  } */
   .upperPart-right h4 {
     font-size: 20px;
     font-weight: 300;
@@ -25,93 +17,14 @@
   .upperPart-right #price {
     margin: 0px;
   }
-  /* .upperPart-right p > span {
-    color: #d15d39;
-  } */
-  /* .upperPart-right #price > span {
-    font-size: 14px;
-    font-weight: 150;
-  } */
-  /* .aboutProduct-rating {
-    display: flex;
-    align-items: center;
-    padding: 3px;
-    background-color: #e3ebda;
-    width: 30px;
-    margin: 10px 0px;
-  } */
+
   .upperPart-right .aboutProduct-button-wrapper {
     display: flex;
   }
-  /* .upperPart-right .aboutProduct-button-wrapper > input {
-    width: 40px;
-    height: 34px;
-    border: #888888 0.5px solid;
-    border-radius: 6px;
-    color: #888888;
-   
-    text-align: center;
-  } */
-  /* .upperPart-right .aboutProduct-button-wrapper > .aboutProduct-add-button {
-    width: 170px;
-    height: 39px;
-    margin-left: 3%;
-    border: #888888 0.5px solid;
-    border-radius: 6px;
-    color: white;
-    background-color: #84c225;
-    cursor: pointer;
-  } */
-  /* .upperPart-right .aboutProduct-button-wrapper > .aboutProduct-save-button {
-    width: 90px;
-    height: 39px;
-    margin-left: 3%;
-    border: #888888 0.5px solid;
-    border-radius: 6px;
-    color: #888888;
-    background-color: white;
-    cursor: pointer;
-  } */
+ 
+
   
-  /* .upperPart-right #delhivery-time {
-    display: flex;
-    column-gap: 10px;
-    align-items: center;
-    padding: 20px 0px;
-  } */
-  /* .upperPart-right > h4:nth-child(5) {
-    color: #888888;
-    font-size: 17px;
-    font-weight: 100;
-    padding-top: 0px;
-    margin-top: 0px;
-    margin-bottom: 10px;
-  } */
-  
-  /* .upperPart-right > .product-weight-value-slect {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 15px;
-    border: solid #888888 0.5px;
-    border-radius: 5px;
-    cursor: pointer; */
-    /* background-color: ; */
-    /* padding: 0px 30px; */
-    /* font-size: 17px;
-    font-weight: 100;
-    padding-top: 0px;
-    margin-top: 0px; */
-  /* } */
-  /* .product-weight-value-slect > #aboutProduct-price-contaner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px;
-    margin: 0px;
-    width: 100%;
-  } */
+
   
 
   /* Table CSS */
@@ -133,10 +46,7 @@
     background-color: #dddddd;
   }
   
- 
- 
- 
-  
+
   /* --------------------------------------------------------------------- */
   
   .lowerPart h4 {

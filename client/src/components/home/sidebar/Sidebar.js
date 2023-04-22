@@ -20,7 +20,6 @@ useEffect(()=>{
             queryString = queryString + '?color=' + filterData.color + '&price=' + filterData.price + '&mileage=' + filterData.mileage;
             const respons = await fetch(queryString);
             const data = await respons.json();
-            console.log(data);
             setFilterCarData(data);
           } catch (err) {
             console.log(err);
@@ -46,7 +45,7 @@ useEffect(()=>{
                 <h4> filters</h4>
 
                 <label for="cars">Choose car Price:</label><br />
-                <select id="car-price-filter" name="car-price-filter" onChange={(e)=>setFilterData({ price:e.target.value})}>
+                <select id="car-price-filter" name="car-price-filter" value={filterData.price} onChange={(e)=>setFilterData({ price:e.target.value, color:"", mileage:""})}>
                     <option value="" ></option>
                     <option value="500000">below the 5 Lakh</option>
                     <option value="1000000">5 Lakh to 10 Lakh</option>
@@ -54,7 +53,7 @@ useEffect(()=>{
                 </select> <br/>
 
                 <label for="cars">Choose car Mileage:</label><br />
-                <select id="car-mileage-filter" name="car-mileage-filter" onChange={(e)=>setFilterData({mileage:e.target.value})}>
+                <select id="car-mileage-filter" name="car-mileage-filter" value={filterData.mileage} onChange={(e)=>setFilterData({mileage:e.target.value, price:"", color:""})}>
                     <option value=""></option>
                     <option value="15">below the 15 L/km</option>
                     <option value="30">15 L/km to 30 L/km</option>
@@ -62,7 +61,7 @@ useEffect(()=>{
                 </select> <br/>
 
                 <label for="cars">Choose a car color:</label><br />
-                <select id="car-colors-filter" name="car-colors-filter" onChange={(e)=>setFilterData({color:e.target.value})}>
+                <select id="car-colors-filter" name="car-colors-filter" value={filterData.color} onChange={(e)=>setFilterData({color:e.target.value, price:"", mileage:""})}>
                     <option value=""></option>
                     <option value="blue">Blue</option>
                     <option value="black">Black</option>

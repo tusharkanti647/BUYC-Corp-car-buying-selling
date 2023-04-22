@@ -5,6 +5,7 @@ import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams} from "react-router-dom";
+import Sidebar from "../home/sidebar/Sidebar";
 
 
 
@@ -49,24 +50,7 @@ function AboutCar() {
         <Box sx={{ display: "flex", flexDirection: "column", justifyContent: 'center', alignItems: "center" }} className="About-product-main">
             <Box sx={{ width: "95%", display: "flex" }} className="upperPart">
 
-                <Box sx={{ width: "25%", borderRight: "solid 0.5px #888888", color: "#888888" }} className="sidebar-category">
-                    <Box>
-                        <h4> Category</h4>
-                        <p>
-                            Fruits & Vegetables <br />
-                            Fresh Vegetables<br />
-                            Beans, Brinjals & Okra<br />
-
-                        </p>
-                    </Box>
-                    <Box>
-                        <h4>Brands</h4>
-                        <p>
-                            Fresho<br />
-                            Fresho Potato, Onion & Tomato
-                        </p>
-                    </Box>
-                </Box>
+                <Sidebar />
 
                 {/* ---------------------------------------------------------------------------- */}
                 <img src={oneCarData.imgLink} alt="" />
@@ -85,11 +69,11 @@ function AboutCar() {
                                 <Button variant="contained" color="success">
                                     Edit
                                 </Button>
-                                <Button variant="outlined" color="error">
+                                <Button sx={{ml:"5%"}} variant="outlined" color="error">
                                     Delete
                                 </Button>
-                                <Button variant="contained" color="success">
-                                    Bye
+                                <Button  sx={{ml:"5%"}} variant="contained" color="success">
+                                    By
                                 </Button>
                             </div>
                         </Box>

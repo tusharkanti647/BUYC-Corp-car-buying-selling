@@ -81,7 +81,7 @@ export default function Menu() {
                     <Link to="/" onClick={menuClose}>
                         <div>Home</div>
                     </Link>
-                        {showLoginButton ? <SignIn menuClose={menuClose}/> : <div onClick={handelLogOut}>Log Out</div>}
+                        {showLoginButton ? <SignIn menuClose={menuClose}/> : <div style={{cursor:"pointer"}} onClick={handelLogOut}>Log Out</div>}
                     <div>User</div>
                     <Link to="/car-add-page" >
                         <div>Add New Car Information</div>

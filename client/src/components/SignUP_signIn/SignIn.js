@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const style = {
@@ -25,13 +25,14 @@ const style = {
 };
 
 
-export default function SignIn({menuClose}) {
+export default function SignIn({ menuClose }) {
     const [open, setOpen] = useState(false);
     const [cookieValue, setCookieValue] = useState('');
     const [signInData, setSignInData] = useState({
         password: "",
         email: ""
     });
+    const navigate = useNavigate()
 
 
     //handel model close or open
@@ -76,11 +77,12 @@ export default function SignIn({menuClose}) {
             alert("user sucessfull signin");
             //console.log(data);
             localStorage.setItem("token", data.token);
-            
-            
+
+
             //navigate to home page
             handleClose();
             menuClose();
+            navigate("/");
 
             setSignInData({
                 ...signInData,
@@ -90,10 +92,10 @@ export default function SignIn({menuClose}) {
         }
     }
 
-    
 
-    
-//console.log(cookieValue);
+
+
+    //console.log(cookieValue);
     return (
         <div>
             <Button onClick={handleOpen}>login</Button>
@@ -102,7 +104,7 @@ export default function SignIn({menuClose}) {
                 onClose={handleClose}
             >
                 <Box sx={{ ...style, width: 400 }}>
-                    
+
                     <Box
                         component="form"
                         method="POST"

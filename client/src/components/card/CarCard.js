@@ -1,5 +1,5 @@
 
-import "./CarCard.css"
+//import "./CarCard.css"
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -69,20 +69,15 @@ function CarCard({ eachCarData }) {
                     </Typography>
 
                 </CardContent>
-                <CardActions sx={{ pt: "0px", bgcolor: "#F4F3F2" }}>
+                <CardActions sx={{ pt: "0px", bgcolor: "#F4F3F2", justifyContent:"space-around" }}>
                     <Link to={editLink}>
                         <Button variant="contained" color="success">
                             Edit
                         </Button>
                     </Link>
-                    <Button onClick={handelDelete} variant="outlined" color="error">
+                    <Button  onClick={handelDelete} variant="outlined" color="error">
                         Delete
                     </Button>
-                    <Button variant="contained" color="success">
-                        Bye
-                    </Button>
-
-                    
                 </CardActions>
             </Card>
         </>
